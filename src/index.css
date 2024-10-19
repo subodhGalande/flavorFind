@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .section-heading {
+    @apply text-center text-3xl font-bold tracking-tight sm:text-5xl;
+  }
+}
