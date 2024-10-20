@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="z-50 mx-auto hidden sm:flex sm:w-11/12 sm:justify-between sm:border-b sm:py-5">
+      <nav className="z-50 mx-auto hidden sm:flex sm:w-full sm:justify-between sm:border-b sm:px-5 sm:py-5">
         <img
           className="object-contain"
           src="/assets/logo.png"
