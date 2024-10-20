@@ -9,29 +9,30 @@ import "swiper/css/autoplay";
 import { Autoplay, Pagination } from "swiper/modules";
 
 const Hero = () => {
+  const windowWidth = window.innerWidth > 450 ? true : false;
   return (
     <Swiper
       modules={[Autoplay, Pagination]}
-      spaceBetween={-100}
+      spaceBetween={windowWidth ? -100 : 100}
       autoplay={{
         delay: 3000,
         disableOnInteraction: false,
       }}
       loop={true}
-      slidesPerView={1.07}
+      slidesPerView={windowWidth ? 1.07 : 1}
       centeredSlides={true}
       initialSlide={1}
-      className="mt-10 hidden h-[calc(100vh-76px)] max-h-[720px] w-full items-center justify-center overflow-hidden sm:flex"
+      className="my-5 h-full items-center justify-center overflow-hidden px-5 sm:mt-10 sm:flex sm:h-[calc(100vh-76px)] sm:max-h-[720px] sm:px-0"
     >
       {/* hero card  */}
 
       <SwiperSlide>
-        <div className="mx-auto flex overflow-hidden rounded-[3rem] sm:h-[90%] sm:w-[85%]">
-          <div className="bg-primary flex h-full w-1/2 flex-col justify-between p-10">
+        <div className="col mx-auto flex w-full flex-col-reverse overflow-hidden rounded-3xl sm:h-[90%] sm:w-[85%] sm:flex-row sm:rounded-[3rem]">
+          <div className="bg-primary flex flex-col justify-between p-5 sm:h-full sm:w-1/2 sm:p-10">
             {/* text and badge */}
-            <div className="flex flex-col gap-y-6">
+            <div className="flex flex-col gap-y-4 sm:gap-y-6">
               {/* badge */}
-              <div className="flex h-fit w-fit items-center rounded-full bg-white font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
+              <div className="flex h-fit w-fit items-center gap-x-2 rounded-full bg-white px-4 py-2 font-inter text-xs font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
                 <img
                   src="/assets/hotRecipe.png"
                   className="h-5 w-5 object-contain"
@@ -39,11 +40,11 @@ const Hero = () => {
                 Hot Recipes
               </div>
               {/* heading */}
-              <h1 className="font-inter text-[64px] font-bold leading-[4.5rem]">
+              <h1 className="line-clamp-2 font-inter text-2xl font-bold sm:text-[64px] sm:leading-[4.5rem]">
                 Spicy delicious chicken wings
               </h1>
               {/* content */}
-              <p className="line-clamp-2 font-inter text-base font-light leading-relaxed text-black/70">
+              <p className="line-clamp-2 font-inter text-sm font-light leading-relaxed text-black/70 sm:text-base">
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod
                 perferendis possimus impedit magnam minima! Rem tenetur nostrum
                 vel, quasi, dignissimos expedita dicta sint debitis eveniet
@@ -51,30 +52,36 @@ const Hero = () => {
               </p>
               {/* chips */}
               <div className="flex gap-x-4">
-                <div className="flex h-fit w-fit items-center rounded-full bg-black/10 font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
+                <div className="flex h-fit w-fit items-center gap-x-2 rounded-full bg-black/10 px-4 py-2 font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
                   <FaClock />
-                  <p className="font-inter text-sm text-black/70">30 minutes</p>
+                  <p className="font-inter text-xs text-black/70 sm:text-sm">
+                    30 minutes
+                  </p>
                 </div>
-                <div className="flex h-fit w-fit items-center rounded-full bg-black/10 font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
+                <div className="flex h-fit w-fit items-center gap-x-2 rounded-full bg-black/10 px-4 py-2 font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
                   <ImSpoonKnife />
-                  <p className="font-inter text-sm text-black/70">Chicken</p>
+                  <p className="font-inter text-xs text-black/70 sm:text-sm">
+                    Chicken
+                  </p>
                 </div>
               </div>
             </div>
 
             {/* source and button */}
-            <div className="flex h-fit w-full items-center justify-between">
+            <div className="mt-10 flex h-fit w-full items-center justify-between sm:mt-0">
               <a href="#" className="flex items-center justify-center gap-x-1">
-                <p className="font-inter font-semibold">Source Name</p>
+                <p className="font-inter text-xs font-semibold sm:text-base">
+                  Source Name
+                </p>
                 <HiOutlineExternalLink className="h-4 w-4 text-black/70" />
               </a>
 
               <a
                 href="#"
-                className="flex items-center justify-center gap-x-3 rounded-2xl bg-black p-4 text-white"
+                className="flex items-center justify-center gap-x-3 rounded-2xl bg-black p-3 text-white sm:p-4"
               >
-                <p className="font-inter text-sm">View Recipes</p>
-                <HiMiniArrowRightCircle className="h-6 w-6" />
+                <p className="font-inter text-xs sm:text-sm">View Recipes</p>
+                <HiMiniArrowRightCircle className="sm:h-6 sm:w-6" />
               </a>
             </div>
           </div>
@@ -88,19 +95,19 @@ const Hero = () => {
             <div>
               <img
                 src="/assets/Badge.png"
-                className="absolute -left-16 top-10 z-50 h-32 w-32 object-cover"
+                className="absolute -bottom-10 right-3 z-50 h-20 w-20 object-cover sm:-left-16 sm:top-10 sm:h-32 sm:w-32"
               />
             </div>
           </div>
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        <div className="mx-auto flex overflow-hidden rounded-[3rem] sm:h-[90%] sm:w-[85%]">
-          <div className="bg-primary flex h-full w-1/2 flex-col justify-between p-10">
+        <div className="col mx-auto flex w-full flex-col-reverse overflow-hidden rounded-3xl sm:h-[90%] sm:w-[85%] sm:flex-row sm:rounded-[3rem]">
+          <div className="bg-primary flex flex-col justify-between p-5 sm:h-full sm:w-1/2 sm:p-10">
             {/* text and badge */}
-            <div className="flex flex-col gap-y-6">
+            <div className="flex flex-col gap-y-4 sm:gap-y-6">
               {/* badge */}
-              <div className="flex h-fit w-fit items-center rounded-full bg-white font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
+              <div className="flex h-fit w-fit items-center gap-x-2 rounded-full bg-white px-4 py-2 font-inter text-xs font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
                 <img
                   src="/assets/hotRecipe.png"
                   className="h-5 w-5 object-contain"
@@ -108,11 +115,11 @@ const Hero = () => {
                 Hot Recipes
               </div>
               {/* heading */}
-              <h1 className="font-inter text-[64px] font-bold leading-[4.5rem]">
+              <h1 className="line-clamp-2 font-inter text-2xl font-bold sm:text-[64px] sm:leading-[4.5rem]">
                 Spicy delicious chicken wings
               </h1>
               {/* content */}
-              <p className="line-clamp-2 font-inter text-base font-light leading-relaxed text-black/70">
+              <p className="line-clamp-2 font-inter text-sm font-light leading-relaxed text-black/70 sm:text-base">
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod
                 perferendis possimus impedit magnam minima! Rem tenetur nostrum
                 vel, quasi, dignissimos expedita dicta sint debitis eveniet
@@ -120,30 +127,36 @@ const Hero = () => {
               </p>
               {/* chips */}
               <div className="flex gap-x-4">
-                <div className="flex h-fit w-fit items-center rounded-full bg-black/10 font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
+                <div className="flex h-fit w-fit items-center gap-x-2 rounded-full bg-black/10 px-4 py-2 font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
                   <FaClock />
-                  <p className="font-inter text-sm text-black/70">30 minutes</p>
+                  <p className="font-inter text-xs text-black/70 sm:text-sm">
+                    30 minutes
+                  </p>
                 </div>
-                <div className="flex h-fit w-fit items-center rounded-full bg-black/10 font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
+                <div className="flex h-fit w-fit items-center gap-x-2 rounded-full bg-black/10 px-4 py-2 font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
                   <ImSpoonKnife />
-                  <p className="font-inter text-sm text-black/70">Chicken</p>
+                  <p className="font-inter text-xs text-black/70 sm:text-sm">
+                    Chicken
+                  </p>
                 </div>
               </div>
             </div>
 
             {/* source and button */}
-            <div className="flex h-fit w-full items-center justify-between">
+            <div className="mt-10 flex h-fit w-full items-center justify-between sm:mt-0">
               <a href="#" className="flex items-center justify-center gap-x-1">
-                <p className="font-inter font-semibold">Source Name</p>
+                <p className="font-inter text-xs font-semibold sm:text-base">
+                  Source Name
+                </p>
                 <HiOutlineExternalLink className="h-4 w-4 text-black/70" />
               </a>
 
               <a
                 href="#"
-                className="flex items-center justify-center gap-x-3 rounded-2xl bg-black p-4 text-white"
+                className="flex items-center justify-center gap-x-3 rounded-2xl bg-black p-3 text-white sm:p-4"
               >
-                <p className="font-inter text-sm">View Recipes</p>
-                <HiMiniArrowRightCircle className="h-6 w-6" />
+                <p className="font-inter text-xs sm:text-sm">View Recipes</p>
+                <HiMiniArrowRightCircle className="sm:h-6 sm:w-6" />
               </a>
             </div>
           </div>
@@ -157,19 +170,19 @@ const Hero = () => {
             <div>
               <img
                 src="/assets/Badge.png"
-                className="absolute -left-16 top-10 z-50 h-32 w-32 object-cover"
+                className="absolute -bottom-10 right-3 z-50 h-20 w-20 object-cover sm:-left-16 sm:top-10 sm:h-32 sm:w-32"
               />
             </div>
           </div>
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        <div className="mx-auto flex overflow-hidden rounded-[3rem] sm:h-[90%] sm:w-[85%]">
-          <div className="bg-primary flex h-full w-1/2 flex-col justify-between p-10">
+        <div className="col mx-auto flex w-full flex-col-reverse overflow-hidden rounded-3xl sm:h-[90%] sm:w-[85%] sm:flex-row sm:rounded-[3rem]">
+          <div className="bg-primary flex flex-col justify-between p-5 sm:h-full sm:w-1/2 sm:p-10">
             {/* text and badge */}
-            <div className="flex flex-col gap-y-6">
+            <div className="flex flex-col gap-y-4 sm:gap-y-6">
               {/* badge */}
-              <div className="flex h-fit w-fit items-center rounded-full bg-white font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
+              <div className="flex h-fit w-fit items-center gap-x-2 rounded-full bg-white px-4 py-2 font-inter text-xs font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
                 <img
                   src="/assets/hotRecipe.png"
                   className="h-5 w-5 object-contain"
@@ -177,11 +190,11 @@ const Hero = () => {
                 Hot Recipes
               </div>
               {/* heading */}
-              <h1 className="font-inter text-[64px] font-bold leading-[4.5rem]">
+              <h1 className="line-clamp-2 font-inter text-2xl font-bold sm:text-[64px] sm:leading-[4.5rem]">
                 Spicy delicious chicken wings
               </h1>
               {/* content */}
-              <p className="line-clamp-2 font-inter text-base font-light leading-relaxed text-black/70">
+              <p className="line-clamp-2 font-inter text-sm font-light leading-relaxed text-black/70 sm:text-base">
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod
                 perferendis possimus impedit magnam minima! Rem tenetur nostrum
                 vel, quasi, dignissimos expedita dicta sint debitis eveniet
@@ -189,30 +202,36 @@ const Hero = () => {
               </p>
               {/* chips */}
               <div className="flex gap-x-4">
-                <div className="flex h-fit w-fit items-center rounded-full bg-black/10 font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
+                <div className="flex h-fit w-fit items-center gap-x-2 rounded-full bg-black/10 px-4 py-2 font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
                   <FaClock />
-                  <p className="font-inter text-sm text-black/70">30 minutes</p>
+                  <p className="font-inter text-xs text-black/70 sm:text-sm">
+                    30 minutes
+                  </p>
                 </div>
-                <div className="flex h-fit w-fit items-center rounded-full bg-black/10 font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
+                <div className="flex h-fit w-fit items-center gap-x-2 rounded-full bg-black/10 px-4 py-2 font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
                   <ImSpoonKnife />
-                  <p className="font-inter text-sm text-black/70">Chicken</p>
+                  <p className="font-inter text-xs text-black/70 sm:text-sm">
+                    Chicken
+                  </p>
                 </div>
               </div>
             </div>
 
             {/* source and button */}
-            <div className="flex h-fit w-full items-center justify-between">
+            <div className="mt-10 flex h-fit w-full items-center justify-between sm:mt-0">
               <a href="#" className="flex items-center justify-center gap-x-1">
-                <p className="font-inter font-semibold">Source Name</p>
+                <p className="font-inter text-xs font-semibold sm:text-base">
+                  Source Name
+                </p>
                 <HiOutlineExternalLink className="h-4 w-4 text-black/70" />
               </a>
 
               <a
                 href="#"
-                className="flex items-center justify-center gap-x-3 rounded-2xl bg-black p-4 text-white"
+                className="flex items-center justify-center gap-x-3 rounded-2xl bg-black p-3 text-white sm:p-4"
               >
-                <p className="font-inter text-sm">View Recipes</p>
-                <HiMiniArrowRightCircle className="h-6 w-6" />
+                <p className="font-inter text-xs sm:text-sm">View Recipes</p>
+                <HiMiniArrowRightCircle className="sm:h-6 sm:w-6" />
               </a>
             </div>
           </div>
@@ -226,76 +245,7 @@ const Hero = () => {
             <div>
               <img
                 src="/assets/Badge.png"
-                className="absolute -left-16 top-10 z-50 h-32 w-32 object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className="mx-auto flex overflow-hidden rounded-[3rem] sm:h-[90%] sm:w-[85%]">
-          <div className="bg-primary flex h-full w-1/2 flex-col justify-between p-10">
-            {/* text and badge */}
-            <div className="flex flex-col gap-y-6">
-              {/* badge */}
-              <div className="flex h-fit w-fit items-center rounded-full bg-white font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
-                <img
-                  src="/assets/hotRecipe.png"
-                  className="h-5 w-5 object-contain"
-                />{" "}
-                Hot Recipes
-              </div>
-              {/* heading */}
-              <h1 className="font-inter text-[64px] font-bold leading-[4.5rem]">
-                Spicy delicious chicken wings
-              </h1>
-              {/* content */}
-              <p className="line-clamp-2 font-inter text-base font-light leading-relaxed text-black/70">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod
-                perferendis possimus impedit magnam minima! Rem tenetur nostrum
-                vel, quasi, dignissimos expedita dicta sint debitis eveniet
-                accusamus officiis eius explicabo quo?{" "}
-              </p>
-              {/* chips */}
-              <div className="flex gap-x-4">
-                <div className="flex h-fit w-fit items-center rounded-full bg-black/10 font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
-                  <FaClock />
-                  <p className="font-inter text-sm text-black/70">30 minutes</p>
-                </div>
-                <div className="flex h-fit w-fit items-center rounded-full bg-black/10 font-inter font-medium sm:gap-x-4 sm:px-4 sm:py-2 sm:text-sm">
-                  <ImSpoonKnife />
-                  <p className="font-inter text-sm text-black/70">Chicken</p>
-                </div>
-              </div>
-            </div>
-
-            {/* source and button */}
-            <div className="flex h-fit w-full items-center justify-between">
-              <a href="#" className="flex items-center justify-center gap-x-1">
-                <p className="font-inter font-semibold">Source Name</p>
-                <HiOutlineExternalLink className="h-4 w-4 text-black/70" />
-              </a>
-
-              <a
-                href="#"
-                className="flex items-center justify-center gap-x-3 rounded-2xl bg-black p-4 text-white"
-              >
-                <p className="font-inter text-sm">View Recipes</p>
-                <HiMiniArrowRightCircle className="h-6 w-6" />
-              </a>
-            </div>
-          </div>
-
-          {/* imgae and badge */}
-          <div className="relative sm:h-full sm:w-1/2 sm:rounded">
-            <img
-              src="/assets/chickenWings.png"
-              className="h-full w-full object-cover"
-            />
-            <div>
-              <img
-                src="/assets/Badge.png"
-                className="absolute -left-16 top-10 z-50 h-32 w-32 object-cover"
+                className="absolute -bottom-10 right-3 z-50 h-20 w-20 object-cover sm:-left-16 sm:top-10 sm:h-32 sm:w-32"
               />
             </div>
           </div>
