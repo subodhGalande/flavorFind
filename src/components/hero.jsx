@@ -31,7 +31,7 @@ const Hero = () => {
         <div key={index}>
           <SwiperSlide>
             <div className="col mx-auto flex w-full flex-col-reverse overflow-hidden rounded-3xl sm:h-[90%] sm:w-[85%] sm:flex-row sm:rounded-[3rem]">
-              <div className="bg-primary flex flex-col justify-between p-5 sm:h-full sm:w-1/2 sm:p-10">
+              <div className="flex flex-col justify-between bg-primary p-5 sm:h-full sm:w-1/2 sm:p-10">
                 {/* text and badge */}
                 <div className="flex flex-col gap-y-4 sm:gap-y-6">
                   {/* badge */}
