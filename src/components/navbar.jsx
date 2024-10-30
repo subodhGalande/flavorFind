@@ -3,6 +3,7 @@ import { AiFillInstagram } from "react-icons/ai";
 import { CgClose } from "react-icons/cg";
 import { FaSquareFacebook, FaSquareXTwitter } from "react-icons/fa6";
 import { RiMenu5Line } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setisOpen] = useState(false);
@@ -20,9 +21,8 @@ const Navbar = () => {
           width="100px"
         />
         <div className="flex flex-row font-inter font-medium sm:items-center sm:gap-x-8 sm:text-base">
-          <a href="#">Home</a>
-          <a href="#">Recipes</a>
-          <a href="#">Contact</a>
+          <Link to="/">Home</Link>
+          <Link to="/">Find Recipes</Link>
         </div>
         <div className="flex flex-row sm:items-center sm:gap-x-4">
           <a href="">
@@ -55,7 +55,7 @@ const Navbar = () => {
           <div className="flex flex-col gap-y-4 font-inter font-medium sm:text-base">
             <a href="#">Home</a>
             <a href="#">Recipes</a>
-            <a href="#">Contact</a>
+            <a href="#">Find Recipes</a>
           </div>
           <div className="flex flex-row gap-x-4 sm:items-center">
             <a href="">

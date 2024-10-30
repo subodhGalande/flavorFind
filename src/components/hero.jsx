@@ -43,7 +43,7 @@ const Hero = () => {
                     Hot Recipes
                   </div>
                   {/* heading */}
-                  <h1 className="line-clamp-2 font-inter text-2xl font-bold sm:text-[64px] sm:leading-[4.5rem]">
+                  <h1 className="font-inter text-2xl font-bold sm:text-6xl">
                     Spicy delicious chicken wings
                   </h1>
                   {/* content */}

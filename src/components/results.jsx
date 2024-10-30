@@ -8,7 +8,7 @@ const Results = ({ setIsOpen, isOpen }) => {
     setIsOpen(true);
   };
   return (
-    <div className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary relative mx-auto mt-2 h-[70vh] w-full overflow-x-hidden overflow-y-scroll rounded-xl border-2 px-5 sm:flex sm:w-[60vw] sm:flex-col sm:space-y-0 sm:rounded-3xl sm:px-4 sm:py-1">
+    <div className="relative mx-auto mt-2 h-[70vh] w-full overflow-x-hidden overflow-y-scroll rounded-xl border-2 px-5 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary sm:flex sm:w-[60rem] sm:flex-col sm:space-y-0 sm:rounded-3xl sm:px-5 sm:py-1">
       <div className="flex h-fit w-full items-center justify-between bg-white py-4 sm:px-5">
         <p>search results</p>
         <button onClick={handleOpen}>
@@ -16,7 +16,7 @@ const Results = ({ setIsOpen, isOpen }) => {
         </button>
       </div>
       {/* recipe card container */}
-      <div className="h-full w-full space-y-10 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-10 sm:gap-y-8 sm:space-y-0">
+      <div className="h-fit w-full space-y-10 sm:grid sm:grid-cols-3 sm:grid-rows-4 sm:place-items-center sm:gap-8 sm:space-y-0 sm:pb-4">
         {/* card */}
         {results &&
           results.map((result, index) => (
