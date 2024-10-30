@@ -11,7 +11,10 @@ const SearchCategory = () => {
 
   return (
     <>
-      <section className="mt-20 h-full w-full p-4 font-inter sm:mt-10">
+      <section
+        id="search"
+        className="mt-20 h-full w-full p-4 font-inter sm:mt-10"
+      >
         {/* Search Box */}
         <form className="relative mx-auto w-full rounded-xl border-2 px-4 py-2 sm:h-14 sm:w-2/5">
           <input
