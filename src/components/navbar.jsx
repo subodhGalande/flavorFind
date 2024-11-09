@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="z-50 mx-auto hidden sm:flex sm:w-full sm:justify-between sm:border-b sm:px-5 sm:py-5">
+      <nav className="fixed top-0 z-50 mx-auto hidden bg-white sm:flex sm:w-full sm:justify-between sm:border sm:p-4">
         <img
           className="object-contain"
           src="/assets/logo.png"
@@ -53,9 +53,8 @@ const Navbar = () => {
           className={`absolute ${isOpen ? "flex" : "hidden"} inset-0 top-full z-50 h-fit w-full flex-col gap-y-6 rounded-2xl border-b bg-white px-10 py-4`}
         >
           <div className="flex flex-col gap-y-4 font-inter font-medium sm:text-base">
-            <a href="#">Home</a>
-            <a href="#">Recipes</a>
-            <a href="#">Find Recipes</a>
+            <Link href="#">Home</Link>
+            <Link href="#">Find Recipes</Link>
           </div>
           <div className="flex flex-row gap-x-4 sm:items-center">
             <a href="">

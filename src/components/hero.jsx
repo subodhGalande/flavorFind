@@ -24,13 +24,13 @@ const Hero = () => {
       slidesPerView={windowWidth ? 1.07 : 1}
       centeredSlides={true}
       initialSlide={1}
-      className="my-5 h-full items-center justify-center overflow-hidden px-5 sm:mt-10 sm:flex sm:h-[calc(100vh-76px)] sm:max-h-[720px] sm:px-0"
+      className="my-5 flex h-full w-full overflow-hidden p-5 sm:flex sm:h-screen sm:w-full sm:items-center sm:justify-center sm:px-0"
     >
       {/* hero card  */}
       {slides.map((slide, index) => (
         <div key={index}>
           <SwiperSlide>
-            <div className="col mx-auto flex w-full flex-col-reverse overflow-hidden rounded-3xl sm:h-[90%] sm:w-[85%] sm:flex-row sm:rounded-[3rem]">
+            <div className="mx-auto flex h-fit w-full flex-col-reverse overflow-hidden rounded-3xl sm:mt-24 sm:h-[80%] sm:w-[85%] sm:flex-row sm:rounded-[3rem]">
               <div className="flex flex-col justify-between bg-primary p-5 sm:h-full sm:w-1/2 sm:p-10">
                 {/* text and badge */}
                 <div className="flex flex-col gap-y-4 sm:gap-y-6">
