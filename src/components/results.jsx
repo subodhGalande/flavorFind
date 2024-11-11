@@ -2,16 +2,17 @@ import { FaClock } from "react-icons/fa6";
 import { ImSpoonKnife } from "react-icons/im";
 import { MdClose } from "react-icons/md";
 
-const Results = ({ setIsOpen, isOpen }) => {
+const Results = ({ searchState, setSearchState }) => {
   const results = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
+
   return (
-    <div className="relative mx-auto mt-2 h-[70vh] w-full overflow-x-hidden overflow-y-scroll rounded-xl border-2 px-5 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary sm:flex sm:w-[60rem] sm:flex-col sm:space-y-0 sm:rounded-3xl sm:px-5 sm:py-1">
+    <div
+      className={`relative mx-auto mt-2 h-[40rem] w-full overflow-x-hidden overflow-y-scroll rounded-xl border-2 p-5 scrollbar-thin scrollbar-track-transparent ${searchState === true ? "" : "hidden"} scrollbar-thumb-primary sm:w-[60rem] sm:flex-col sm:space-y-0 sm:rounded-3xl sm:px-5 sm:py-1`}
+    >
+      {console.log(searchState)}{" "}
       <div className="flex h-fit w-full items-center justify-between bg-white py-4 sm:px-5">
         <p>search results</p>
-        <button onClick={handleOpen}>
+        <button onClick={() => setSearchState(false)}>
           <MdClose className="sm:h-5 sm:w-5" />
         </button>
       </div>
@@ -22,7 +23,7 @@ const Results = ({ setIsOpen, isOpen }) => {
           results.map((result, index) => (
             <div
               key={index}
-              className="flex flex-col gap-y-3 overflow-hidden sm:h-fit sm:w-64"
+              className="flex flex-col gap-y-3 overflow-hidden sm:h-[17rem] sm:w-64"
             >
               <div className="h-44 w-full overflow-hidden rounded-2xl">
                 {" "}
@@ -34,9 +35,8 @@ const Results = ({ setIsOpen, isOpen }) => {
               </div>
 
               <div className="space-y-3">
-                <h2 className="line-clamp-2 font-semibold">
-                  Mixed Tropical Fruit Salad with Superfood Boosts Mixed
-                  Tropical Fruit Salad with Superfood Boosts{" "}
+                <h2 className="line-clamp-2 font-semibold sm:h-12">
+                  Mixed Tropical hds hsd hsdfsd hsdf lsd hkl
                 </h2>
                 <div className="flex gap-x-4">
                   <div className="flex h-fit w-fit items-center gap-x-2 font-inter font-medium">

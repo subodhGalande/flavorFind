@@ -12,9 +12,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <>
-        <ScrollRestoration />{" "}
-        {/* Ensures scroll behavior applies to all routes */}
-        <App />
+        <ScrollRestoration /> <App />
       </>
     ),
     errorElement: <NotFound />,
@@ -23,9 +21,7 @@ const router = createBrowserRouter([
         path: "/",
         element: (
           <>
-            <ScrollRestoration />{" "}
-            {/* Ensures scroll behavior applies to all routes */}
-            <Landing />
+            <ScrollRestoration /> <Landing />
           </>
         ),
       },

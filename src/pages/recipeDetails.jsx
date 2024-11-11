@@ -4,34 +4,59 @@ import { PiClockCountdownFill } from "react-icons/pi";
 import Footer from "../components/footer";
 import Subscribe from "../components/subscribe";
 import { RiShareForwardLine } from "react-icons/ri";
-import { Link, redirect, useParams } from "react-router-dom";
+import { Link, redirect, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
+import { FaClock } from "react-icons/fa6";
 
 const RecipeDetails = () => {
   const [Data, setData] = useState(null);
   const [Error, setError] = useState(false);
   const [isLoading, setisLoading] = useState(false);
+
+  const [Similar, setSimilar] = useState([]);
+  const [SimError, setSimError] = useState();
+  const [SimLoading, setSimLoading] = useState();
+
+  const [checkedInsSteps, setCheckedInsSteps] = useState({});
+  const handleInsCheckboxChange = (stepNumber) => {
+    setCheckedInsSteps((prevCheckedSteps) => ({
+      ...prevCheckedSteps,
+      [stepNumber]: !prevCheckedSteps[stepNumber],
+    }));
+  };
+
+  const [checkedIngSteps, setCheckedIngSteps] = useState({});
+  const handleIngCheckboxChange = (stepNumber) => {
+    setCheckedIngSteps((prevCheckedSteps) => ({
+      ...prevCheckedSteps,
+      [stepNumber]: !prevCheckedSteps[stepNumber],
+    }));
+  };
+
   const [htmlContent, setHtmlContent] = useState("");
 
   let { id } = useParams();
+  const navigate = useNavigate();
+
+  const replaceUrlWithNewId = (newId) => {
+    navigate(`/recipe/${newId}`, { replace: true });
+  };
+
+  const apiKey = import.meta.env.VITE_API_KEY;
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    const apiKey = import.meta.env.VITE_API_KEY;
-    const baseUrl = import.meta.env.VITE_API_BASE_URL;
-
-    const recipeData = async () => {
+    const recipeData = () => {
       setisLoading(true);
       axios
         .get(
-          `${baseUrl}recipes/${id}/information?apiKey=${apiKey}&includeNutirition=true`,
+          `${baseUrl}recipes/${id}/information?apiKey=${apiKey}&includeNutirition=false`,
         )
         .then((response) => {
           setData(response.data);
-          console.log(response.data);
           setHtmlContent(response.data.summary);
-          setError(false);
           setisLoading(false);
         })
         .catch((e) => {
@@ -46,7 +71,35 @@ const RecipeDetails = () => {
     };
 
     recipeData();
-  }, [id]);
+  }, [id, apiKey, baseUrl]);
+
+  useEffect(() => {
+    const simRecipeData = () => {
+      setisLoading(true);
+      axios
+        .get(`${baseUrl}recipes/${id}/similar?apiKey=${apiKey}&number=3`)
+        .then((response) => {
+          const recipesWithImages = response.data.map((recipe) => ({
+            ...recipe,
+            imageUrl: `https://spoonacular.com/recipeImages/${recipe.id}-480x360.${recipe.imageType}`,
+          }));
+
+          setSimilar(recipesWithImages);
+          setSimLoading(false);
+        })
+        .catch((e) => {
+          if (e) {
+            setSimError(true);
+          }
+          setSimLoading(false);
+        })
+        .finally(() => {
+          setSimLoading(false);
+        });
+    };
+
+    simRecipeData();
+  }, [id, apiKey, baseUrl]);
 
   if (Error) {
     return redirect("/404");
@@ -63,7 +116,7 @@ const RecipeDetails = () => {
         className="mx-auto font-inter sm:w-11/12 sm:p-10"
       >
         {/* heading and button */}
-        <div className="mx-auto mt-5 flex items-center justify-between px-5 sm:mt-0">
+        <div className="mx-auto mt-5 flex items-center justify-between px-5 sm:mt-20">
           <h1 className="text-3xl font-bold capitalize sm:w-10/12 sm:text-6xl sm:font-semibold sm:leading-tight">
             {Data && Data.title}{" "}
           </h1>
@@ -98,7 +151,6 @@ const RecipeDetails = () => {
                 Cooking Time
               </h3>
             </div>
-
             <p className="text-lg font-bold sm:text-2xl">
               {Data && Data.readyInMinutes} minutes
             </p>
@@ -228,14 +280,20 @@ const RecipeDetails = () => {
                   >
                     <input
                       type="checkbox"
-                      id="vehicle1"
-                      name="vehicle1"
-                      value="Bike"
+                      id={ingredient.id}
+                      name={ingredient.id}
+                      value={ingredient.original}
+                      checked={!!checkedIngSteps[ingredient.id]}
+                      onChange={() => handleIngCheckboxChange(ingredient.id)}
                       className="h-3 w-3 appearance-none rounded-full border-2 border-black/50 bg-white checked:border-0 checked:bg-black sm:h-4 sm:w-4"
                     />
                     <label
-                      htmlFor="vehicle1"
-                      className="text-base sm:w-11/12 sm:text-lg"
+                      htmlFor={ingredient.id}
+                      className={` ${
+                        checkedInsSteps[ingredient.id]
+                          ? "text-gray-500 line-through"
+                          : ""
+                      } w-11/12 text-base sm:text-lg`}
                     >
                       {ingredient.original}{" "}
                     </label>
@@ -257,14 +315,20 @@ const RecipeDetails = () => {
                     >
                       <input
                         type="checkbox"
-                        id="vehicle1"
-                        name="vehicle1"
-                        value="Bike"
-                        className="h-3 w-3 appearance-none rounded-full border-2 border-black/50 bg-white checked:border-0 checked:bg-black sm:h-4 sm:w-4"
+                        id={step.number}
+                        name={step.step}
+                        value={step.step}
+                        checked={!!checkedInsSteps[step.number]}
+                        onChange={() => handleInsCheckboxChange(step.number)}
+                        className="h-3 w-3 cursor-grab appearance-none rounded-full border-2 border-black/50 bg-white checked:border-0 checked:bg-black sm:h-4 sm:w-4"
                       />
                       <label
-                        htmlFor="vehicle1"
-                        className="text-base sm:w-11/12 sm:text-lg"
+                        htmlFor={step.number}
+                        className={` ${
+                          checkedIngSteps[step.number]
+                            ? "text-gray-500 line-through"
+                            : ""
+                        } w-11/12 cursor-grab text-base sm:text-lg`}
                       >
                         {step.step}
                       </label>
@@ -279,35 +343,28 @@ const RecipeDetails = () => {
             <h2 className="mb-5 text-2xl font-semibold sm:mb-10 sm:text-2xl sm:font-semibold">
               Similar Recipes
             </h2>
-            <div className="gap-4 space-y-4 sm:mt-6 sm:grid sm:grid-cols-1 sm:grid-rows-3 sm:space-y-0">
-              <div className="grid grid-cols-5 grid-rows-1 place-items-center space-x-4 sm:gap-4 sm:space-x-0">
-                <img
-                  src="/assets/searchImage.png"
-                  className="col-span-2 rounded-2xl object-cover"
-                />
-                <div className="col-span-3">
-                  <p className="line-clamp-2 font-bold">
-                    Chicken wings Delicious lala
-                  </p>
-                  <p className="line-clamp-2 pt-2 text-sm text-black/70">
-                    by Andrea Poulos
-                  </p>
-                </div>
-              </div>
-              <div className="grid grid-cols-5 grid-rows-1 place-items-center space-x-4 sm:gap-4 sm:space-x-0">
-                <img
-                  src="/assets/searchImage.png"
-                  className="col-span-2 rounded-2xl object-cover"
-                />
-                <div className="col-span-3">
-                  <p className="line-clamp-2 font-bold">
-                    Chicken wings Delicious lala lala
-                  </p>
-                  <p className="line-clamp-2 pt-2 text-sm text-black/70">
-                    by Andrea Poulos
-                  </p>
-                </div>
-              </div>
+
+            <div className="gap-4 space-y-4 sm:mt-6 sm:grid sm:grid-cols-1 sm:grid-rows-3 sm:space-y-4">
+              {Similar &&
+                Similar.map((data) => (
+                  <button
+                    key={data.id}
+                    onClick={() => replaceUrlWithNewId(data.id)}
+                    className="grid grid-cols-5 grid-rows-1 place-items-center space-x-4 text-left duration-150 hover:scale-105 sm:gap-4 sm:space-x-0"
+                  >
+                    <img
+                      src={data.imageUrl}
+                      className="col-span-2 rounded-2xl object-cover"
+                    />
+                    <div className="col-span-3 w-full">
+                      <p className="line-clamp-2 font-bold">{data.title}</p>
+                      <p className="line-clamp-2 flex flex-row items-center gap-x-2 pt-2 text-sm text-black/70">
+                        <FaClock />
+                        {data.readyInMinutes} minutes
+                      </p>
+                    </div>
+                  </button>
+                ))}
             </div>
           </div>
         </section>

@@ -1,12 +1,12 @@
 import Results from "./results";
-import CategoryCard from "./categoryCard";
 import { useState } from "react";
 
 const SearchCategory = () => {
-  const [isSearchOpen, setisSearchOpen] = useState(false);
+  const [Search, setSearch] = useState(false);
 
-  const handleOpen = () => {
-    setisSearchOpen(!isSearchOpen);
+  const handleOpen = (e) => {
+    e.preventDefault();
+    setSearch(true);
   };
 
   return (
@@ -16,7 +16,10 @@ const SearchCategory = () => {
         className="mt-20 h-full w-full p-4 font-inter sm:mt-10"
       >
         {/* Search Box */}
-        <form className="relative mx-auto w-full rounded-xl border-2 px-4 py-2 sm:h-14 sm:w-2/5">
+        <form
+          onSubmit={handleOpen}
+          className="relative mx-auto w-full rounded-xl border-2 px-4 py-2 sm:h-14 sm:w-2/5"
+        >
           <input
             type="text"
             className="h-full w-[80%] outline-none placeholder:text-sm placeholder:font-light"
@@ -51,16 +54,7 @@ const SearchCategory = () => {
         </div>
 
         {/* searchbox results */}
-        <Results setIsOpen={setisSearchOpen} isSearchOpen={isSearchOpen} />
-
-        {/* categories */}
-
-        {/* <div className="mt-20">
-          <div className="">
-            <h1 className="section-heading">Categories</h1>
-            <div className="mt-10 flex h-fit flex-wrap justify-center gap-6 sm:gap-x-8"></div>
-          </div>
-        </div> */}
+        <Results searchState={Search} setSearchState={setSearch} />
       </section>
     </>
   );
