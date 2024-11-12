@@ -28,10 +28,10 @@ const RecipeDetails = () => {
   };
 
   const [checkedIngSteps, setCheckedIngSteps] = useState({});
-  const handleIngCheckboxChange = (stepNumber) => {
-    setCheckedIngSteps((prevCheckedSteps) => ({
-      ...prevCheckedSteps,
-      [stepNumber]: !prevCheckedSteps[stepNumber],
+  const handleIngCheckboxChange = (ingNumber) => {
+    setCheckedIngSteps((prevCheckedIng) => ({
+      ...prevCheckedIng,
+      [ingNumber]: !prevCheckedIng[ingNumber],
     }));
   };
 
@@ -290,10 +290,10 @@ const RecipeDetails = () => {
                     <label
                       htmlFor={ingredient.id}
                       className={` ${
-                        checkedInsSteps[ingredient.id]
-                          ? "text-gray-500 line-through"
+                        checkedIngSteps[ingredient.id]
+                          ? "text-black/20 line-through"
                           : ""
-                      } w-11/12 text-base sm:text-lg`}
+                      } w-11/12 cursor-grab text-base sm:text-lg`}
                     >
                       {ingredient.original}{" "}
                     </label>
@@ -325,8 +325,8 @@ const RecipeDetails = () => {
                       <label
                         htmlFor={step.number}
                         className={` ${
-                          checkedIngSteps[step.number]
-                            ? "text-gray-500 line-through"
+                          checkedInsSteps[step.number]
+                            ? "text-black/20 line-through"
                             : ""
                         } w-11/12 cursor-grab text-base sm:text-lg`}
                       >
