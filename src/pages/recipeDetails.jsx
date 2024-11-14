@@ -16,8 +16,8 @@ const RecipeDetails = () => {
   const [isLoading, setisLoading] = useState(false);
 
   const [Similar, setSimilar] = useState([]);
-  const [SimError, setSimError] = useState();
-  const [SimLoading, setSimLoading] = useState();
+  const [SimError, setSimError] = useState(false);
+  const [SimLoading, setSimLoading] = useState(false);
 
   const [checkedInsSteps, setCheckedInsSteps] = useState({});
   const handleInsCheckboxChange = (stepNumber) => {
@@ -52,10 +52,11 @@ const RecipeDetails = () => {
       setisLoading(true);
       axios
         .get(
-          `${baseUrl}recipes/${id}/information?apiKey=${apiKey}&includeNutirition=false`,
+          `${baseUrl}recipes/${id}/information?apiKey=${apiKey}&includeNutirition=true`,
         )
         .then((response) => {
           setData(response.data);
+          console.log(response.data);
           setHtmlContent(response.data.summary);
           setisLoading(false);
         })
@@ -343,29 +344,34 @@ const RecipeDetails = () => {
             <h2 className="mb-5 text-2xl font-semibold sm:mb-10 sm:text-2xl sm:font-semibold">
               Similar Recipes
             </h2>
-
-            <div className="gap-4 space-y-4 sm:mt-6 sm:grid sm:grid-cols-1 sm:grid-rows-3 sm:space-y-4">
-              {Similar &&
-                Similar.map((data) => (
-                  <button
-                    key={data.id}
-                    onClick={() => replaceUrlWithNewId(data.id)}
-                    className="grid grid-cols-5 grid-rows-1 place-items-center space-x-4 text-left duration-150 hover:scale-105 sm:gap-4 sm:space-x-0"
-                  >
-                    <img
-                      src={data.imageUrl}
-                      className="col-span-2 rounded-2xl object-cover"
-                    />
-                    <div className="col-span-3 w-full">
-                      <p className="line-clamp-2 font-bold">{data.title}</p>
-                      <p className="line-clamp-2 flex flex-row items-center gap-x-2 pt-2 text-sm text-black/70">
-                        <FaClock />
-                        {data.readyInMinutes} minutes
-                      </p>
-                    </div>
-                  </button>
-                ))}
-            </div>
+            {(() => {
+              if (SimError) return <p>Oops! cannot find recipes</p>;
+              if (SimLoading) return <p>Loading...</p>;
+              return (
+                <div className="gap-4 space-y-4 sm:mt-6 sm:grid sm:grid-cols-1 sm:grid-rows-3 sm:space-y-4">
+                  {Similar &&
+                    Similar.map((data) => (
+                      <button
+                        key={data.id}
+                        onClick={() => replaceUrlWithNewId(data.id)}
+                        className="grid grid-cols-5 grid-rows-1 place-items-center space-x-4 text-left duration-150 hover:scale-105 sm:gap-4 sm:space-x-0"
+                      >
+                        <img
+                          src={data.imageUrl}
+                          className="col-span-2 rounded-2xl object-cover"
+                        />
+                        <div className="col-span-3 w-full">
+                          <p className="line-clamp-2 font-bold">{data.title}</p>
+                          <p className="line-clamp-2 flex flex-row items-center gap-x-2 pt-2 text-sm text-black/70">
+                            <FaClock />
+                            {data.readyInMinutes} minutes
+                          </p>
+                        </div>
+                      </button>
+                    ))}
+                </div>
+              );
+            })()}
           </div>
         </section>
       </main>

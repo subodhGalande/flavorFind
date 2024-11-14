@@ -2,17 +2,22 @@ import { FaClock } from "react-icons/fa6";
 import { ImSpoonKnife } from "react-icons/im";
 import { MdClose } from "react-icons/md";
 
-const Results = ({ searchState, setSearchState }) => {
+const Results = ({ searchData, setSearchData, isOpen, setIsOpen }) => {
   const results = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  const handleClose = () => {
+    setSearchData([]);
+    setIsOpen(false);
+  };
 
   return (
     <div
-      className={`relative mx-auto mt-2 h-[40rem] w-full overflow-x-hidden overflow-y-scroll rounded-xl border-2 p-5 scrollbar-thin scrollbar-track-transparent ${searchState === true ? "" : "hidden"} scrollbar-thumb-primary sm:w-[60rem] sm:flex-col sm:space-y-0 sm:rounded-3xl sm:px-5 sm:py-1`}
+      className={`relative mx-auto mt-2 h-[40rem] w-full overflow-x-hidden overflow-y-scroll rounded-xl border-2 p-5 scrollbar-thin scrollbar-track-transparent ${isOpen === true ? "" : "hidden"} scrollbar-thumb-primary sm:w-[60rem] sm:flex-col sm:space-y-0 sm:rounded-3xl sm:px-5 sm:py-1`}
     >
-      {console.log(searchState)}{" "}
+      {console.log(searchData)}
       <div className="flex h-fit w-full items-center justify-between bg-white py-4 sm:px-5">
         <p>search results</p>
-        <button onClick={() => setSearchState(false)}>
+        <button onClick={handleClose}>
           <MdClose className="sm:h-5 sm:w-5" />
         </button>
       </div>

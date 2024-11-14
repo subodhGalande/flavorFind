@@ -1,18 +1,86 @@
 import Results from "./results";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import axios from "axios";
 
 const SearchCategory = () => {
-  const [Search, setSearch] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const apiKey = import.meta.env.VITE_API_KEY;
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
-  const handleOpen = (e) => {
-    e.preventDefault();
+  const [Open, setOpen] = useState(false);
+  const [IsLoading, setIsLoading] = useState(false);
+  const [SearchData, setSearchData] = useState([]);
+  const [ErrorSearch, setErrorSearch] = useState(false);
+
+  const queryRef = useRef("");
+
+  const categories = [
+    {
+      text: "Breakfast",
+      img: "/assets/croissant.png",
+    },
+    {
+      text: "lunch",
+      img: "/assets/fried-rice.png",
+    },
+    {
+      text: "meat",
+      img: "/assets/meat.png",
+    },
+    {
+      text: "chocolate",
+      img: "/assets/chocolate-bar.png",
+    },
+    {
+      text: "avocado",
+      img: "/assets/avocado.png",
+    },
+    {
+      text: "chicken",
+      img: "/assets/chicken-leg.png",
+    },
+    {
+      text: "soup",
+      img: "/assets/hot-soup.png",
+    },
+    {
+      text: "vegetarian",
+      img: "/assets/vegetable.png",
+    },
+  ];
+
+  const searchRecipe = async (query) => {
     setIsLoading(true);
-
-    setTimeout(() => {
-      setSearch(true);
+    try {
+      const response = await axios.get(`${baseUrl}recipes/complexSearch`, {
+        params: {
+          apiKey: apiKey,
+          ...(query && { query: query }),
+        },
+      });
+      setSearchData(response.data);
+      setErrorSearch(false);
+    } catch (e) {
+      setErrorSearch(true);
+      setOpen(false);
+    } finally {
       setIsLoading(false);
-    }, 5000);
+    }
+  };
+
+  const handleOpen = async (e) => {
+    e.preventDefault();
+    const query = queryRef.current.value.trim();
+    if (query) {
+      await searchRecipe(query);
+      console.log(query);
+      queryRef.current.value = "";
+    }
+
+    if (queryRef.current.value === "") {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
   };
 
   return (
@@ -28,11 +96,12 @@ const SearchCategory = () => {
         >
           <input
             type="text"
+            ref={queryRef}
             className="h-full w-[80%] outline-none placeholder:text-sm placeholder:font-light"
             placeholder="search recipes"
           />
 
-          {isLoading ? (
+          {IsLoading ? (
             <button
               className="absolute bottom-1 right-1 z-20 flex items-center gap-x-2 rounded-lg bg-black/50 px-3 py-1 text-white sm:bottom-[0.4rem] sm:right-2 sm:h-3/4 sm:px-4"
               disabled
@@ -60,41 +129,48 @@ const SearchCategory = () => {
                     values="0 12 12;360 12 12"
                   />
                 </path>
-              </svg>{" "}
+              </svg>
               searching...
             </button>
           ) : (
             <button
               type="submit"
-              className="absolute bottom-1 right-1 z-20 rounded-lg bg-black px-3 py-1 text-white sm:bottom-[0.4rem] sm:right-2 sm:h-3/4 sm:px-4"
+              className="absolute bottom-1 right-1 z-20 rounded-lg bg-black px-3 py-1 text-white duration-150 hover:scale-105 sm:bottom-[0.4rem] sm:right-2 sm:h-3/4 sm:px-4"
             >
               Search
             </button>
           )}
         </form>
-        <div className="mx-auto my-4 flex w-full flex-wrap items-center justify-evenly gap-x-4 gap-y-2 sm:justify-center">
-          <button className="rounded-lg border px-2 py-1 text-sm">
-            breakfast
-          </button>
-          <button className="rounded-lg border px-2 py-1 text-sm">lunch</button>
-          <button className="rounded-lg border px-2 py-1 text-sm">meat</button>
-          <button className="rounded-lg border px-2 py-1 text-sm">
-            chocolate
-          </button>
-          <button className="rounded-lg border px-2 py-1 text-sm">
-            vegetarian
-          </button>
-          <button className="rounded-lg border px-2 py-1 text-sm">
-            avocado
-          </button>
-          <button className="rounded-lg border px-2 py-1 text-sm">
-            chicken
-          </button>
-          <button className="rounded-lg border px-2 py-1 text-sm">soup</button>
+        {ErrorSearch ||
+          (SearchData.totalResults === 0 && (
+            <p className="p-4 text-center text-xs text-black/60 sm:text-sm">
+              Error! could not fetch recipes, try again
+            </p>
+          ))}
+
+        {/* categories */}
+        <div className="mx-auto my-4 flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-2 sm:justify-center">
+          {categories &&
+            categories.map((item, index) => (
+              <button
+                key={index}
+                className="flex items-center gap-2 rounded-lg border px-2 py-1 text-sm duration-150 hover:scale-110"
+              >
+                <img src={item.img} height="20px" width="18px" />
+                {item.text}
+              </button>
+            ))}
         </div>
 
         {/* searchbox results */}
-        <Results searchState={Search} setSearchState={setSearch} />
+        {SearchData.totalResults !== 0 && (
+          <Results
+            searchData={SearchData}
+            setSearchData={setSearchData}
+            isOpen={Open}
+            setIsOpen={setOpen}
+          />
+        )}
       </section>
     </>
   );
