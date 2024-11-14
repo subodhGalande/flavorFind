@@ -137,11 +137,20 @@ const RecipeDetails = () => {
         <div className="mx-auto mt-7 grid h-[35rem] w-11/12 grid-cols-2 grid-rows-6 gap-2 sm:mt-12 sm:h-[35rem] sm:w-full sm:grid-cols-6 sm:grid-rows-3 sm:gap-4 sm:px-10">
           {/* Images  */}
           <div className="col-span-2 row-span-2 overflow-hidden rounded-2xl sm:col-span-3 sm:row-span-2 sm:rounded-3xl">
-            <img
-              src={Data && Data.image}
-              className="h-full w-full object-cover"
-            />
-            hello
+            {Data.image && Data.image ? (
+              <img
+                src={Data.image}
+                alt="recipe image"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <img
+                src="/assets/foodPlaceholder.jpg"
+                alt="recipe image"
+                className="h-full w-full object-cover"
+              />
+            )}
+            {console.log(Data.image)}
           </div>
           {/* prep time */}
           <div className="col-span-1 row-span-1 flex flex-col items-center justify-center gap-2 rounded-2xl bg-primary/70 sm:col-span-1 sm:row-span-1 sm:gap-4 sm:rounded-3xl">

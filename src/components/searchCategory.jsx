@@ -6,9 +6,8 @@ const SearchCategory = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
-  const [Open, setOpen] = useState(false);
   const [IsLoading, setIsLoading] = useState(false);
-  const [SearchData, setSearchData] = useState([]);
+  const [SearchData, setSearchData] = useState(null);
   const [ErrorSearch, setErrorSearch] = useState(false);
 
   const queryRef = useRef("");
@@ -50,6 +49,7 @@ const SearchCategory = () => {
 
   const searchRecipe = async (query) => {
     setIsLoading(true);
+    setSearchData(null);
     try {
       const response = await axios.get(`${baseUrl}recipes/complexSearch`, {
         params: {
@@ -61,7 +61,6 @@ const SearchCategory = () => {
       setErrorSearch(false);
     } catch (e) {
       setErrorSearch(true);
-      setOpen(false);
     } finally {
       setIsLoading(false);
     }
@@ -74,12 +73,6 @@ const SearchCategory = () => {
       await searchRecipe(query);
       console.log(query);
       queryRef.current.value = "";
-    }
-
-    if (queryRef.current.value === "") {
-      setOpen(false);
-    } else {
-      setOpen(true);
     }
   };
 
@@ -130,7 +123,7 @@ const SearchCategory = () => {
                   />
                 </path>
               </svg>
-              searching...
+              searching
             </button>
           ) : (
             <button
@@ -142,7 +135,7 @@ const SearchCategory = () => {
           )}
         </form>
         {ErrorSearch ||
-          (SearchData.totalResults === 0 && (
+          (SearchData && SearchData.totalResults === 0 && (
             <p className="p-4 text-center text-xs text-black/60 sm:text-sm">
               Error! could not fetch recipes, try again
             </p>
@@ -163,13 +156,8 @@ const SearchCategory = () => {
         </div>
 
         {/* searchbox results */}
-        {SearchData.totalResults !== 0 && (
-          <Results
-            searchData={SearchData}
-            setSearchData={setSearchData}
-            isOpen={Open}
-            setIsOpen={setOpen}
-          />
+        {SearchData && SearchData.totalResults !== 0 && (
+          <Results searchData={SearchData} setSearchData={setSearchData} />
         )}
       </section>
     </>
