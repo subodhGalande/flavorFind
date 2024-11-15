@@ -7,11 +7,11 @@ const NotFound = () => {
     <div className="relative flex h-screen w-screen flex-col items-center justify-center gap-4 overflow-hidden bg-primary p-10 font-inter sm:gap-8">
       <img
         src="assets/plate.png"
-        className="absolute sm:-bottom-36 sm:-right-20"
+        className="absolute -right-40 -top-20 -rotate-90 sm:-bottom-36 sm:-right-20 sm:top-auto sm:rotate-0"
       />
       <img
         src="assets/salad.png"
-        className="absolute sm:-bottom-40 sm:-left-20"
+        className="absolute -bottom-28 -left-20 sm:-bottom-40 sm:-left-20"
       />
       <h1 className="text-center text-4xl font-extrabold text-black/80 sm:text-6xl">
         404 Not Found
