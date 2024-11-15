@@ -23,7 +23,7 @@ const Navbar = () => {
         />
         <div className="flex flex-row font-inter font-medium sm:items-center sm:gap-x-8 sm:text-base">
           <Link to="/">Home</Link>
-          <Link to="/">Find Recipes</Link>
+          <Link to="/">Search</Link>
         </div>
         <div className="flex flex-row sm:items-center sm:gap-x-4">
           <a href="">
@@ -55,7 +55,7 @@ const Navbar = () => {
         >
           <div className="flex flex-col gap-y-4 font-inter font-medium sm:text-base">
             <Link href="#">Home</Link>
-            <Link href="#">Find Recipes</Link>
+            <Link href="#">Search</Link>
           </div>
           <div className="flex flex-row gap-x-4 sm:items-center">
             <a href="">

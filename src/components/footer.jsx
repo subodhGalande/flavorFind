@@ -10,7 +10,7 @@ const Footer = () => {
       />
       <div className="flex gap-x-4 font-inter text-sm sm:text-base">
         <a href="">Home</a>
-        <a href="">Recipes</a>
+        <a href="">Search</a>
       </div>
     </div>
   );
