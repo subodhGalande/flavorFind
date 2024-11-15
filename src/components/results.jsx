@@ -23,7 +23,7 @@ const Results = ({ searchData, setSearchData }) => {
       </div>
       {/* recipe card container */}
       <div className="h-fit w-full space-y-10 sm:grid sm:grid-cols-3 sm:grid-rows-4 sm:place-content-center sm:gap-8 sm:space-y-0 sm:pb-4">
-        {/* card */}
+        {/* recipe card */}
 
         {searchData &&
           searchData.results.map((result) => (
@@ -34,11 +34,14 @@ const Results = ({ searchData, setSearchData }) => {
             >
               <div className="h-44 w-full overflow-hidden rounded-2xl">
                 {" "}
-                {result.image && result.image ? (
+                {result && result.image ? (
                   <img
                     src={result.image}
                     alt="recipe image"
                     className="h-full w-full object-cover"
+                    onError={(e) => {
+                      e.target.src = "/assets/foodPlaceholder.jpg";
+                    }}
                   />
                 ) : (
                   <img

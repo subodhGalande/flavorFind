@@ -12,6 +12,7 @@ const Navbar = () => {
 
   return (
     <>
+      {/* desktop navbar */}
       <nav className="fixed top-0 z-50 mx-auto hidden bg-white sm:flex sm:w-full sm:justify-between sm:border sm:p-4">
         <img
           className="object-contain"
@@ -37,7 +38,7 @@ const Navbar = () => {
           </a>
         </div>
       </nav>
-
+      {/* mobile navbar */}
       <nav
         className={`relative flex items-center justify-between ${isOpen ? "" : "border"} px-4 py-4 sm:hidden`}
       >

@@ -19,6 +19,8 @@ const RecipeDetails = () => {
   const [SimError, setSimError] = useState(false);
   const [SimLoading, setSimLoading] = useState(false);
 
+  const [Copied, setCopied] = useState();
+
   const [checkedInsSteps, setCheckedInsSteps] = useState({});
   const handleInsCheckboxChange = (stepNumber) => {
     setCheckedInsSteps((prevCheckedSteps) => ({
@@ -52,7 +54,7 @@ const RecipeDetails = () => {
       setisLoading(true);
       axios
         .get(
-          `${baseUrl}recipes/${id}/information?apiKey=${apiKey}&includeNutirition=true`,
+          `${baseUrl}recipes/${id}/information?apiKey=${apiKey}&includeNutrition=true`,
         )
         .then((response) => {
           setData(response.data);
@@ -78,7 +80,7 @@ const RecipeDetails = () => {
     const simRecipeData = () => {
       setisLoading(true);
       axios
-        .get(`${baseUrl}recipes/${id}/similar?apiKey=${apiKey}&number=3`)
+        .get(`${baseUrl}recipes/${id}/similar?apiKey=${apiKey}&number=5`)
         .then((response) => {
           const recipesWithImages = response.data.map((recipe) => ({
             ...recipe,
@@ -110,6 +112,20 @@ const RecipeDetails = () => {
     return <Loader />;
   }
 
+  const handleCopy = () => {
+    const currentUrl = window.location.href;
+    navigator.clipboard.writeText(currentUrl).then(() => {
+      setTimeout(() => {
+        setCopied("URL copied to clipboard");
+      }, 3000);
+    });
+    setCopied(null).catch((err) => {
+      setTimeout(() => {
+        setCopied("URL copied to clipboard");
+      }, 3000);
+    });
+  };
+
   return (
     <>
       <main
@@ -121,7 +137,11 @@ const RecipeDetails = () => {
           <h1 className="text-3xl font-bold capitalize sm:w-10/12 sm:text-6xl sm:font-semibold sm:leading-tight">
             {Data && Data.title}{" "}
           </h1>
-          <div className="flex flex-col items-center sm:gap-y-2">
+          {/* share button */}
+          <button
+            onClick={handleCopy}
+            className="relative flex flex-col items-center sm:gap-y-2"
+          >
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary sm:h-20 sm:w-20">
               {" "}
               <RiShareForwardLine className="h-4 w-4 sm:h-7 sm:w-7" />
@@ -129,7 +149,11 @@ const RecipeDetails = () => {
             <p className="hidden font-medium tracking-wider sm:block sm:text-xs">
               SHARE
             </p>
-          </div>
+            <div className="absolute bottom-full border bg-black/50">
+              <p className="font-inter text-xs">{Copied}</p>
+            </div>
+          </button>
+          {console.log(Copied)}
         </div>
 
         {/* bento section */}
@@ -137,20 +161,13 @@ const RecipeDetails = () => {
         <div className="mx-auto mt-7 grid h-[35rem] w-11/12 grid-cols-2 grid-rows-6 gap-2 sm:mt-12 sm:h-[35rem] sm:w-full sm:grid-cols-6 sm:grid-rows-3 sm:gap-4 sm:px-10">
           {/* Images  */}
           <div className="col-span-2 row-span-2 overflow-hidden rounded-2xl sm:col-span-3 sm:row-span-2 sm:rounded-3xl">
-            {Data.image && Data.image ? (
-              <img
-                src={Data.image}
-                alt="recipe image"
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <img
-                src="/assets/foodPlaceholder.jpg"
-                alt="recipe image"
-                className="h-full w-full object-cover"
-              />
-            )}
-            {console.log(Data.image)}
+            <img
+              src={Data && Data.image}
+              className="h-full w-full object-cover"
+              onError={(e) => {
+                e.target.src = "/assets/foodPlaceholder.jpg";
+              }}
+            />
           </div>
           {/* prep time */}
           <div className="col-span-1 row-span-1 flex flex-col items-center justify-center gap-2 rounded-2xl bg-primary/70 sm:col-span-1 sm:row-span-1 sm:gap-4 sm:rounded-3xl">
@@ -184,37 +201,33 @@ const RecipeDetails = () => {
                 Nutritional Information
               </h2>
               <ul>
-                <li className="border-b border-black/5 py-2 sm:py-3">
-                  <div className="flex justify-between">
-                    <p className="text-base font-medium text-black/50 sm:text-lg">
-                      Calories
-                    </p>
-                    <p className="text-base font-medium text-black sm:text-lg">
-                      250.0 Kcal
-                    </p>
-                  </div>
-                </li>
-                <li className="border-b border-black/5 py-2 sm:py-3">
-                  <div className="flex justify-between">
-                    <p className="text-base font-medium text-black/50 sm:text-lg">
-                      Calories
-                    </p>
-                    <p className="text-base font-medium text-black sm:text-lg">
-                      250.0 Kcal
-                    </p>
-                  </div>
-                </li>
-                <li className="border-b border-black/5 py-2 sm:py-3">
-                  <div className="flex justify-between">
-                    <p className="text-base font-medium text-black/50 sm:text-lg">
-                      Calories
-                    </p>
-                    <p className="text-base font-medium text-black sm:text-lg">
-                      250.0 Kcal
-                    </p>
-                  </div>
-                </li>
+                {Data &&
+                  Data.nutrition.nutrients.map((nutrient) => (
+                    <li
+                      key={nutrient.name}
+                      className="border-b border-black/5 py-2 sm:py-3"
+                    >
+                      <div className="flex justify-between">
+                        <p className="text-base font-medium text-black/50 sm:text-lg">
+                          {nutrient.name}
+                        </p>
+                        <p className="text-base font-medium text-black sm:text-lg">
+                          {nutrient.amount} {nutrient.unit}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
               </ul>
+              <p className="p-5 text-xs text-black/50">
+                Nutritional information is provided by{" "}
+                <a
+                  href="https://spoonacular.com/"
+                  className="font-semibold underline"
+                  target="_blank"
+                >
+                  Spoonacular
+                </a>{" "}
+              </p>
             </div>
           </div>
           {/* health score */}
@@ -237,8 +250,8 @@ const RecipeDetails = () => {
               <BiFoodTag
                 className={
                   Data && Data.vegetarian
-                    ? `h-8 w-8 text-red-700`
-                    : `h-8 w-8 text-green-700`
+                    ? `h-8 w-8 text-green-700`
+                    : `h-8 w-8 text-red-700`
                 }
               />
             </div>

@@ -53,6 +53,8 @@ const RandomRecipes = () => {
         <Loader />
       ) : (
         <div className="mt-5 flex flex-col gap-y-4 sm:w-full sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-8">
+          {/* recipe card */}
+
           {Data &&
             Data.map((recipe, index) => (
               <Link to={`recipe/${recipe.id}`} key={index}>
@@ -100,7 +102,6 @@ const RandomRecipes = () => {
                 </div>
               </Link>
             ))}
-          {/* recipe card */}
         </div>
       )}
     </section>
