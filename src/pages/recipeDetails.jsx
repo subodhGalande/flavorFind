@@ -79,7 +79,7 @@ const RecipeDetails = () => {
     const simRecipeData = () => {
       setisLoading(true);
       axios
-        .get(`${baseUrl}reipes/${id}/similar?apiKey=${apiKey}&number=5`)
+        .get(`${baseUrl}reipes/${id}/similar?apiKey=${apiKey}&number=4`)
         .then((response) => {
           const recipesWithImages = response.data.map((recipe) => ({
             ...recipe,

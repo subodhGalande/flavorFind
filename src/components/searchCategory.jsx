@@ -1,10 +1,23 @@
 import Results from "./results";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const SearchCategory = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
+  const location = useLocation();
+
+  useEffect(() => {
+    // Check for the hash in the URL
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
 
   const [IsLoading, setIsLoading] = useState(false);
   const [SearchData, setSearchData] = useState(null);
@@ -71,16 +84,18 @@ const SearchCategory = () => {
     const query = queryRef.current.value.trim();
     if (query) {
       await searchRecipe(query);
-      console.log(query);
       queryRef.current.value = "";
     }
   };
-
+  const handleClick = async (query) => {
+    console.log(query);
+    await searchRecipe(query);
+  };
   return (
     <>
       <section
         id="search"
-        className="mt-20 h-full w-full p-4 font-inter sm:mt-10"
+        className="mt-20 h-full w-full scroll-mt-20 p-4 font-inter sm:mt-10"
       >
         {/* Search Box */}
         <form
@@ -148,6 +163,7 @@ const SearchCategory = () => {
             categories.map((item, index) => (
               <button
                 key={index}
+                onClick={() => handleClick(item.text)}
                 className="flex items-center gap-2 rounded-lg border px-2 py-1 text-sm duration-150 hover:scale-110"
               >
                 <img src={item.img} height="20px" width="18px" />

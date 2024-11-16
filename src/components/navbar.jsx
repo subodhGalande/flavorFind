@@ -3,27 +3,36 @@ import { AiFillInstagram } from "react-icons/ai";
 import { CgClose } from "react-icons/cg";
 import { FaSquareFacebook, FaSquareXTwitter } from "react-icons/fa6";
 import { RiMenu5Line } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setisOpen] = useState(false);
 
   const toggleOpen = () => setisOpen(!isOpen);
 
+  const navigate = useNavigate();
+
+  const handleNavigateToSection = () => {
+    navigate("/#search");
+  };
+
   return (
     <>
       {/* desktop navbar */}
       <nav className="fixed top-0 z-50 mx-auto hidden bg-white sm:flex sm:w-full sm:justify-between sm:border sm:p-4">
-        <img
-          className="object-contain"
-          src="/assets/logo.png"
-          alt="logo"
-          height="50px"
-          width="100px"
-        />
+        <Link className="self-center" to="#">
+          <img
+            className="object-contain"
+            src="/assets/logo.png"
+            alt="logo"
+            height="50px"
+            width="100px"
+          />
+        </Link>
+
         <div className="flex flex-row font-inter font-medium sm:items-center sm:gap-x-8 sm:text-base">
           <Link to="/">Home</Link>
-          <Link to="/">Search</Link>
+          <button onClick={handleNavigateToSection}>Search</button>
         </div>
         <div className="flex flex-row sm:items-center sm:gap-x-4">
           <a href="">
@@ -42,7 +51,9 @@ const Navbar = () => {
       <nav
         className={`relative flex items-center justify-between ${isOpen ? "" : "border"} px-4 py-4 sm:hidden`}
       >
-        <img src="/assets/logo.png" height="50px" width="100px" />
+        <Link to="#">
+          <img src="/assets/logo.png" height="50px" width="100px" />
+        </Link>
 
         {isOpen ? (
           <CgClose onClick={toggleOpen} className="h-6 w-6" />
@@ -55,7 +66,9 @@ const Navbar = () => {
         >
           <div className="flex flex-col gap-y-4 font-inter font-medium sm:text-base">
             <Link href="#">Home</Link>
-            <Link href="#">Search</Link>
+            <button className="text-left" onClick={handleNavigateToSection}>
+              Search Recipes
+            </button>
           </div>
           <div className="flex flex-row gap-x-4 sm:items-center">
             <a href="">
