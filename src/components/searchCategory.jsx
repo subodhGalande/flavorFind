@@ -92,6 +92,7 @@ const SearchCategory = () => {
             ref={queryRef}
             className="h-full w-[80%] outline-none placeholder:text-sm placeholder:font-light"
             placeholder="search recipes"
+            required
           />
 
           {IsLoading ? (

@@ -15,7 +15,7 @@ const RecipeDetails = () => {
   const [Error, setError] = useState(false);
   const [isLoading, setisLoading] = useState(false);
 
-  const [Similar, setSimilar] = useState([]);
+  const [Similar, setSimilar] = useState(null);
   const [SimError, setSimError] = useState(false);
   const [SimLoading, setSimLoading] = useState(false);
 
@@ -58,7 +58,6 @@ const RecipeDetails = () => {
         )
         .then((response) => {
           setData(response.data);
-          console.log(response.data);
           setHtmlContent(response.data.summary);
           setisLoading(false);
         })
@@ -80,7 +79,7 @@ const RecipeDetails = () => {
     const simRecipeData = () => {
       setisLoading(true);
       axios
-        .get(`${baseUrl}recipes/${id}/similar?apiKey=${apiKey}&number=5`)
+        .get(`${baseUrl}reipes/${id}/similar?apiKey=${apiKey}&number=5`)
         .then((response) => {
           const recipesWithImages = response.data.map((recipe) => ({
             ...recipe,
@@ -115,13 +114,16 @@ const RecipeDetails = () => {
   const handleCopy = () => {
     const currentUrl = window.location.href;
     navigator.clipboard.writeText(currentUrl).then(() => {
+      setCopied("URL copied to clipboard");
       setTimeout(() => {
-        setCopied("URL copied to clipboard");
+        setCopied(null);
       }, 3000);
     });
     setCopied(null).catch((err) => {
+      setCopied("Error copying URL to clipboard");
+
       setTimeout(() => {
-        setCopied("URL copied to clipboard");
+        setCopied(null);
       }, 3000);
     });
   };
@@ -149,11 +151,14 @@ const RecipeDetails = () => {
             <p className="hidden font-medium tracking-wider sm:block sm:text-xs">
               SHARE
             </p>
-            <div className="absolute bottom-full border bg-black/50">
-              <p className="font-inter text-xs">{Copied}</p>
-            </div>
+            {Copied && (
+              <div className="absolute top-full mt-2 rounded border border-black/50 bg-black/50 bg-white p-2 font-inter sm:w-44 sm:p-2">
+                <p className="text-center font-inter text-xs font-semibold text-black/60">
+                  {Copied}
+                </p>
+              </div>
+            )}
           </button>
-          {console.log(Copied)}
         </div>
 
         {/* bento section */}
@@ -170,7 +175,7 @@ const RecipeDetails = () => {
             />
           </div>
           {/* prep time */}
-          <div className="col-span-1 row-span-1 flex flex-col items-center justify-center gap-2 rounded-2xl bg-primary/70 sm:col-span-1 sm:row-span-1 sm:gap-4 sm:rounded-3xl">
+          <div className="col-span-1 row-span-1 flex flex-col items-center justify-center gap-2 rounded-2xl bg-primary sm:col-span-1 sm:row-span-1 sm:gap-4 sm:rounded-3xl">
             <div className="flex items-center gap-2">
               {" "}
               <PiClockCountdownFill className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -183,7 +188,7 @@ const RecipeDetails = () => {
             </p>
           </div>
           {/* health score - mobile*/}
-          <div className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-primary/75 sm:col-span-1 sm:row-span-1 sm:hidden sm:rounded-3xl">
+          <div className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-primary sm:col-span-1 sm:row-span-1 sm:hidden sm:rounded-3xl">
             <div className="flex items-center gap-2">
               {" "}
               <MdHealthAndSafety className="sm:h-5 sm:w-5" />
@@ -231,7 +236,7 @@ const RecipeDetails = () => {
             </div>
           </div>
           {/* health score */}
-          <div className="hidden flex-col items-center justify-center gap-4 bg-primary/75 sm:col-span-1 sm:row-span-1 sm:flex sm:rounded-3xl">
+          <div className="hidden flex-col items-center justify-center gap-4 bg-primary sm:col-span-1 sm:row-span-1 sm:flex sm:rounded-3xl">
             <div className="flex items-center gap-2">
               {" "}
               <MdHealthAndSafety className="sm:h-5 sm:w-5" />
@@ -367,8 +372,20 @@ const RecipeDetails = () => {
               Similar Recipes
             </h2>
             {(() => {
-              if (SimError) return <p>Oops! cannot find recipes</p>;
-              if (SimLoading) return <p>Loading...</p>;
+              if (Similar == null)
+                return (
+                  <p className="text-center text-black/60">
+                    No similar recipes available
+                  </p>
+                );
+              if (SimError)
+                return (
+                  <p className="text-center text-black/60">
+                    Oops! cannot find recipes
+                  </p>
+                );
+              if (SimLoading)
+                return <p className="text-center text-black/60">Loading...</p>;
               return (
                 <div className="gap-4 space-y-4 sm:mt-6 sm:grid sm:grid-cols-1 sm:grid-rows-3 sm:space-y-4">
                   {Similar &&

@@ -135,7 +135,7 @@ const Hero = () => {
                     <HiOutlineExternalLink className="h-4 w-4 text-black/70" />
                   </a>
                   <Link
-                    to={`${baseUrl}recipe/${slide.id}`}
+                    to={`recipe/${slide.id}`}
                     className="flex w-60 items-center justify-center gap-x-3 rounded-2xl bg-black p-3 text-white sm:p-4"
                   >
                     <p className="font-inter text-xs sm:text-sm">View Recipe</p>

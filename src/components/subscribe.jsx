@@ -27,6 +27,9 @@ const Subscribe = () => {
         },
         (error) => {
           setisSent("OOPS! error sending email");
+          setTimeout(() => {
+            setisSent(null);
+          }, 3000);
         },
       );
   };
@@ -68,10 +71,11 @@ const Subscribe = () => {
         <input
           type="email"
           value={email}
-          name="user_mail"
+          name="user_email"
           onChange={(e) => setEmail(e.target.value)}
           className="h-full w-[80%] text-xs outline-none placeholder:text-sm placeholder:font-light sm:text-base"
           placeholder="enter email"
+          required
         />
         <button
           type="submit"
