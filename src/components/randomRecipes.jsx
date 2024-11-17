@@ -18,7 +18,7 @@ const RandomRecipes = () => {
     const fetchRandomRecipes = async () => {
       setisLoading(true);
       axios
-        .get(`${baseUrl}recpes/random?apiKey=${apiKey}&number=6`)
+        .get(`${baseUrl}recipes/random?apiKey=${apiKey}&number=6`)
         .then((response) => {
           setData(response.data.recipes);
           setError(false);

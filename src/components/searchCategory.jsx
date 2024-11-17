@@ -95,7 +95,7 @@ const SearchCategory = () => {
     <>
       <section
         id="search"
-        className="mt-20 h-full w-full scroll-mt-20 p-4 font-inter sm:mt-10"
+        className="mt-20 h-full w-full scroll-mt-6 p-4 font-inter sm:mt-10 sm:scroll-mt-24"
       >
         {/* Search Box */}
         <form

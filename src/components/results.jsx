@@ -1,20 +1,34 @@
+import { useEffect, useState } from "react";
 import { FaClock } from "react-icons/fa6";
 import { ImSpoonKnife } from "react-icons/im";
 import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Results = ({ searchData, setSearchData }) => {
-  const results = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const [isVisible, setIsVisible] = useState(false);
 
   const handleClose = () => {
     setSearchData(null);
+    setIsVisible(false);
+    setTimeout(() => {
+      setSearchData(null);
+    }, 1000);
   };
+
+  useEffect(() => {
+    if (searchData !== null) {
+      setIsVisible(true);
+    }
+  }, [searchData]);
 
   return (
     <div
-      className={`relative mx-auto mt-2 h-[40rem] w-full overflow-x-hidden overflow-y-scroll rounded-xl border-2 p-5 scrollbar-thin scrollbar-track-transparent ${searchData !== null ? "" : "hidden"} scrollbar-thumb-primary sm:w-[60rem] sm:flex-col sm:space-y-0 sm:rounded-3xl sm:px-5 sm:py-1`}
+      className={`relative mx-auto mt-2 w-full overflow-x-hidden overflow-y-scroll rounded-xl border-2 p-5 scrollbar-thin scrollbar-track-transparent ${
+        searchData !== null ? "" : "hidden"
+      } transition-all duration-300 ease-in-out scrollbar-thumb-primary sm:w-[60rem] sm:flex-col sm:space-y-0 sm:rounded-3xl sm:px-5 sm:py-1 ${
+        isVisible ? "h-[40rem] opacity-100" : "h-0 opacity-0"
+      }`}
     >
-      {console.log(searchData.results)}
       <div className="flex h-fit w-full items-center justify-between bg-white py-4 sm:px-5">
         <p>search results</p>
         <button onClick={handleClose}>

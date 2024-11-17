@@ -10,8 +10,6 @@ import { Autoplay, Pagination } from "swiper/modules";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
-  const baseUrl = import.meta.env.VITE_API_BASE_URL;
-
   const slideContent = [
     {
       title: "sweet potatoe casserole with pecan crumble toppings",
@@ -21,6 +19,8 @@ const Hero = () => {
       srcUrl: "https://www.foodista.com/recipe/BJ23ZP3F/sweet-potato-casserole",
       id: 662560,
       image: "assets/sweetPotatoe.jpg",
+      summary:
+        "Sweet Potato Casserole with Pecan Crumble is a creamy, nutty, and irresistibly cozy treat.",
     },
     {
       title: "Farfalle With Broccoli, Carrots And Tomatoes ",
@@ -31,6 +31,8 @@ const Hero = () => {
         " https://www.foodista.com/recipe/YV88GS5Z/farfalle-with-broccoli-carrots-and-tomatoes",
       id: 642582,
       image: "assets/farfalle.jpg",
+      summary:
+        "Farfalle with Broccoli, Carrots, and Tomatoes is a vibrant, wholesome medley of flavors and textures.",
     },
     {
       title: "Chai Pani’s Malabar Chicken Curry",
@@ -41,6 +43,8 @@ const Hero = () => {
         " https://www.foodista.com/recipe/SZ8F8FWX/chai-panis-malabar-chicken-curry",
       id: 637391,
       image: "assets/chaipani.webp",
+      summary:
+        "Chai Pani’s Malabar Chicken Curry is a rich, aromatic dish bursting with coastal spices, creamy coconut, and a hint of tangy tamarind.",
     },
     {
       title: "Chicken Tikka Masala Indian",
@@ -51,6 +55,8 @@ const Hero = () => {
         " https://www.foodista.com/recipe/P7ZX4DTZ/chicken-tikka-masala-indian",
       id: 638389,
       image: "assets/chickenTikka.jpg",
+      summary:
+        "Chicken Tikka Masala is a rich and smoky Indian classic, featuring tender grilled chicken in a luscious, spiced tomato-cream sauce.",
     },
     {
       title: "Indian Sweet Jackfruit Dessert",
@@ -61,6 +67,8 @@ const Hero = () => {
         "https://www.foodista.com/recipe/KQNV4HKP/indian-sweet-jackfruit-dessert-recipe-paleo-aip",
       id: 1095688,
       image: "assets/jackfruit.jpg",
+      summary:
+        "Indian Sweet Jackfruit Dessert is a tropical delight, blending tender jackfruit with creamy sweetness and aromatic spices.",
     },
   ];
 
@@ -101,10 +109,7 @@ const Hero = () => {
                   </h1>
                   {/* content */}
                   <p className="line-clamp-2 font-inter text-sm font-light leading-relaxed text-black/70 sm:text-base">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Quod perferendis possimus impedit magnam minima! Rem tenetur
-                    nostrum vel, quasi, dignissimos expedita dicta sint debitis
-                    eveniet accusamus officiis eius explicabo quo?{" "}
+                    {slide.summary}
                   </p>
                   {/* chips */}
                   <div className="flex gap-x-4">

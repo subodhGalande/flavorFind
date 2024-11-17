@@ -15,6 +15,9 @@ export default {
       colors: {
         primary: "#E7FAFE",
       },
+      transitionProperty: {
+        height: "height",
+      },
     },
   },
 

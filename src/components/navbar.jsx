@@ -20,7 +20,7 @@ const Navbar = () => {
     <>
       {/* desktop navbar */}
       <nav className="fixed top-0 z-50 mx-auto hidden bg-white sm:flex sm:w-full sm:justify-between sm:border sm:p-4">
-        <Link className="self-center" to="#">
+        <Link className="self-center" to="/">
           <img
             className="object-contain"
             src="/assets/logo.png"
@@ -35,14 +35,14 @@ const Navbar = () => {
           <button onClick={handleNavigateToSection}>Search</button>
         </div>
         <div className="flex flex-row sm:items-center sm:gap-x-4">
-          <a href="">
+          <a href="https://x.com" target="_blank">
             <FaSquareXTwitter className="sm:h-10 sm:w-5" />
           </a>
-          <a href="">
+          <a href="https://instagram.com" target="_blank">
             {" "}
             <AiFillInstagram className="sm:h-10 sm:w-6" />
           </a>
-          <a href="">
+          <a href="https://facebook.com" target="_blank">
             <FaSquareFacebook className="sm:h-10 sm:w-5" />
           </a>
         </div>
@@ -71,14 +71,14 @@ const Navbar = () => {
             </button>
           </div>
           <div className="flex flex-row gap-x-4 sm:items-center">
-            <a href="">
+            <a href="https://x.com/?lang=en" target="_blank">
               <FaSquareXTwitter className="h-10 w-6" />
             </a>
-            <a href="">
+            <a href="https://instagram.com" target="_blank">
               {" "}
               <AiFillInstagram className="h-10 w-8" />
             </a>
-            <a href="">
+            <a href="https://facebook.com" target="_blank">
               <FaSquareFacebook className="h-10 w-6" />
             </a>
           </div>
