@@ -396,8 +396,11 @@ const RecipeDetails = () => {
                         className="grid grid-cols-5 grid-rows-1 place-items-center space-x-4 text-left duration-150 hover:scale-105 sm:gap-4 sm:space-x-0"
                       >
                         <img
-                          src={data.imageUrl}
+                          src={Similar && data.imageUrl}
                           className="col-span-2 rounded-2xl object-cover"
+                          onError={(e) => {
+                            e.target.src = "/assets/foodPlaceholder.jpg";
+                          }}
                         />
                         <div className="col-span-3 w-full">
                           <p className="line-clamp-2 font-bold">{data.title}</p>
